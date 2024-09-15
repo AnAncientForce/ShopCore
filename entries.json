@@ -1,21 +1,49 @@
 {
-  "Animal": [
-    "Cat Biscuits",
-    "Tinned Cat Food",
-    "Cat Treats",
-    "Gravy Bones",
-    "Dog Mixer Biscuits",
-    "Dog Treats"
+  "Fruit": [
+    "Apples",
+    "Avocados",
+    "Blueberries",
+    "Grapes",
+    "Lemons",
+    "Mangos",
+    "Oranges",
+    "Pears",
+    "Strawberries"
   ],
-  "Bakery": [
-    "Bread",
-    "Bread Rolls",
-    "Cake",
-    "Crumpets",
-    "Pancakes",
-    "Potato Cakes",
-    "Pain Au Chocolate"
+  "Salad": [
+    "Celery",
+    "Tomatoes",
+    "Cucumber",
+    "Salad Leaves",
+    "Peppers",
+    "Spring Onions",
+    "Coleslaw"
   ],
+  "Vegetables": [
+    "Cabbage",
+    "Carrots",
+    "Garlic",
+    "Green Beans",
+    "Leeks",
+    "Onions",
+    "Potatoes",
+    "Baby Potatoes",
+    "Mushrooms",
+    "Peppers",
+    "Sweet Potato"
+  ],
+  "Meat": [
+    "Bacon",
+    "Beef",
+    "Chicken",
+    "Leg of Lamb",
+    "Lamb",
+    "Mince",
+    "Sausages",
+    "Chicken Breast",
+    "Lambs Liver"
+  ],
+  "Seafood": ["Prawns", "Scallops"],
   "Dairy": [
     "Butter",
     "Cheese",
@@ -51,6 +79,13 @@
     "Rice Krispies",
     "Mung Beans"
   ],
+  "Snacks": [
+    "Ready Salted Crisps",
+    "Salt and Vinegar Crisps",
+    "Popcorn",
+    "Potato Sticks",
+    "marshmallows"
+  ],
   "Drinks": [
     "Appletise",
     "Coke Zero",
@@ -60,17 +95,6 @@
     "Orange Juice",
     "Pear Juice",
     "Water"
-  ],
-  "Fruit": [
-    "Apples",
-    "Avocados",
-    "Blueberries",
-    "Grapes",
-    "Lemons",
-    "Mangos",
-    "Oranges",
-    "Pears",
-    "Strawberries"
   ],
   "Herbs and Spices": [
     "Coriander",
@@ -94,34 +118,6 @@
     "Washing up Sponges",
     "Toilet Cleaner"
   ],
-  "Meat": [
-    "Bacon",
-    "Beef",
-    "Chicken",
-    "Leg of Lamb",
-    "Lamb",
-    "Mince",
-    "Sausages",
-    "Chicken Breast",
-    "Lambs Liver"
-  ],
-  "Salad": [
-    "Celery",
-    "Tomatoes",
-    "Cucumber",
-    "Salad Leaves",
-    "Peppers",
-    "Spring Onions",
-    "Coleslaw"
-  ],
-  "Seafood": ["Prawns", "Scallops"],
-  "Snacks": [
-    "Ready Salted Crisps",
-    "Salt and Vinegar Crisps",
-    "Popcorn",
-    "Potato Sticks",
-    "marshmallows"
-  ],
   "Toiletry": [
     "Shower Gel",
     "Toilet Rolls",
@@ -130,17 +126,21 @@
     "Shampoo",
     "Deodorant"
   ],
-  "Vegetables": [
-    "Cabbage",
-    "Carrots",
-    "Garlic",
-    "Green Beans",
-    "Leeks",
-    "Onions",
-    "Potatoes",
-    "Baby Potatoes",
-    "Mushrooms",
-    "Peppers",
-    "Sweet Potato"
+  "Pet": [
+    "Cat Biscuits",
+    "Tinned Cat Food",
+    "Cat Treats",
+    "Gravy Bones",
+    "Dog Mixer Biscuits",
+    "Dog Treats"
+  ],
+  "Bakery": [
+    "Bread",
+    "Bread Rolls",
+    "Cake",
+    "Crumpets",
+    "Pancakes",
+    "Potato Cakes",
+    "Pain Au Chocolate"
   ]
 }
