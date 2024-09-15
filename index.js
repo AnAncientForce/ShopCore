@@ -81,6 +81,13 @@ function update_basket(product) {
     debug && console.log(`removed ${product}`);
   }
 
+  document.querySelectorAll("p").forEach((p) => {
+    if (p.textContent.includes(product)) {
+      p.style.backgroundColor =
+        p.style.backgroundColor == "green" ? "rgba(0, 0, 0, 0.5)" : "green";
+    }
+  });
+
   basket_content.innerHTML = "";
   for (let i = 0; i < basket.length; i++) {
     const item = document.createElement("div");
@@ -126,8 +133,6 @@ async function load_dynamic_categories() {
         p.textContent = item;
 
         p.addEventListener("click", () => {
-          p.style.backgroundColor =
-            p.style.backgroundColor == "green" ? "rgba(0, 0, 0, 0.5)" : "green";
           update_basket(item);
         });
 
