@@ -50,47 +50,24 @@ function cast_loading_screen(state) {
   }
 }
 
-async function load_dynamic_categories() {
-  try {
-    const site_json = await fetch("site.json");
-    const entries_json = await fetch("entries.json");
+function sortCategoriesAlphabetically(data) {
+  const tmp = {};
+  for (const category in data) {
+    tmp[category] = data[category].slice().sort((a, b) => a.localeCompare(b));
+  }
+  return tmp;
+}
 
-    const site_data = await site_json.json();
-    entries_data = await entries_json.json();
-
-    document.title = site_data[0].author;
-
-    for (const category in entries_data) {
-      debug && console.log(`Category: ${category}`);
-
-      const elem_category = document.createElement("div");
-      const elem_category_title = document.createElement("h1");
-
-      elem_category_title.textContent = category;
-
-      elem_category.classList.add("sub_category");
-      elem_category.appendChild(elem_category_title);
-
-      entries_data[category].forEach((item) => {
-        debug && console.log(`- ${item}`);
-        const p = document.createElement("p");
-        p.textContent = item;
-
-        p.addEventListener("click", () => {
-          p.style.backgroundColor =
-            p.style.backgroundColor == "green"
-              ? "rgba(255, 255, 255, 0.5)"
-              : "green";
-          update_basket(item);
-        });
-
-        elem_category.appendChild(p);
-      });
-
-      document.getElementById("categories").appendChild(elem_category);
-    }
-  } catch (error) {
-    console.error("Error fetching JSON file:", error);
+function check_empty_basket() {
+  if (basket.length == 0) {
+    const p = document.createElement("p");
+    p.textContent = "Your basket is empty!";
+    document.getElementById("basket_content").appendChild(p);
+    notify({
+      message: `Your basket is empty!`,
+      timeout: 2,
+    });
+    return;
   }
 }
 
@@ -118,6 +95,50 @@ function update_basket(product) {
     item.appendChild(p);
     basket_content.appendChild(item);
   }
+
+  check_empty_basket();
+}
+
+async function load_dynamic_categories() {
+  try {
+    const site_json = await fetch("site.json");
+    const entries_json = await fetch("entries.json");
+
+    const site_data = await site_json.json();
+    entries_data = sortCategoriesAlphabetically(await entries_json.json());
+
+    document.title = site_data[0].author;
+
+    for (const category in entries_data) {
+      debug && console.log(`Category: ${category}`);
+
+      const elem_category = document.createElement("div");
+      const elem_category_title = document.createElement("h1");
+
+      elem_category_title.textContent = category;
+
+      elem_category.classList.add("sub_category");
+      elem_category.appendChild(elem_category_title);
+
+      entries_data[category].forEach((item) => {
+        debug && console.log(`- ${item}`);
+        const p = document.createElement("p");
+        p.textContent = item;
+
+        p.addEventListener("click", () => {
+          p.style.backgroundColor =
+            p.style.backgroundColor == "green" ? "rgba(0, 0, 0, 0.5)" : "green";
+          update_basket(item);
+        });
+
+        elem_category.appendChild(p);
+      });
+
+      document.getElementById("categories").appendChild(elem_category);
+    }
+  } catch (error) {
+    console.error("Error fetching JSON file:", error);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -126,14 +147,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   cast_loading_screen(true);
 
   document.getElementById("copy").addEventListener("click", () => {
-    if (basket.length == 0) {
-      notify({
-        message: `Your basket is empty.`,
-        timeout: 2,
-      });
+    if (check_empty_basket()) {
       return;
     }
-
     // sort
     let tmp = [];
     for (const category in entries_data) {

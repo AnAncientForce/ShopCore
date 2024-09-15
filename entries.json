@@ -30,7 +30,8 @@
     "Baby Potatoes",
     "Mushrooms",
     "Peppers",
-    "Sweet Potato"
+    "Sweet Potato",
+    "Peas"
   ],
   "Meat": [
     "Bacon",
@@ -64,7 +65,7 @@
     "Eggs",
     "HP Sauce",
     "Jam",
-    "thick cut marmalade",
+    "Thick Cut Marmalade",
     "Ketchup",
     "Mayonnaise",
     "Onion Gravy",
@@ -84,7 +85,7 @@
     "Salt and Vinegar Crisps",
     "Popcorn",
     "Potato Sticks",
-    "marshmallows"
+    "Marshmallows"
   ],
   "Drinks": [
     "Appletise",
@@ -102,7 +103,37 @@
     "Chillies",
     "Ginger",
     "Mint",
-    "Meti"
+    "Meti",
+    "Mixed herbs",
+    "Thyme",
+    "Oregano",
+    "Dill",
+    "Parsley",
+    "Basil",
+    "Cumin",
+    "Black Pepper",
+    "Salt",
+    "Turmeric",
+    "Chilli Powder",
+    "Nutmeg",
+    "Cinnamon",
+    "Cloves",
+    "Fenugreek",
+    "Anise",
+    "Star Anise",
+    "All Spice",
+    "Curry Powder",
+    "Mustard Seeds",
+    "Cardamom",
+    "Mace",
+    "Sage",
+    "Carom Seeds",
+    "Garam Masala",
+    "Chinese 5 Spice",
+    "Chinese Szechuan Peppercorns",
+    "Fennel Seeds",
+    "Green Peppercorns",
+    "Asafoetida"
   ],
   "Household": [
     "Bin Bags",
