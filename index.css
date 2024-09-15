@@ -143,12 +143,25 @@ a {
   border-radius: 12px;
   margin: 2.5%;
 }
-.sub_category > p {
+
+.product {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
   background-color: rgba(0, 0, 0, 0.5);
   margin: 2.5%;
-  border-radius: 12px;
+}
+
+.quantity {
+  font-size: xx-large;
 }
 
 .basket_content_product {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+input {
+  font-size: large;
+  width: 15%;
+  margin-right: 5%;
 }

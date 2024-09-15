@@ -8,7 +8,6 @@ let loading_screen;
 let cd = false;
 let total_network_usage = 0;
 let debug = document.URL === "http://127.0.0.1:5500/";
-let basket = [];
 let entries_data;
 
 function array_remove_if_exists(array, itemName) {
@@ -59,49 +58,39 @@ function sortCategoriesAlphabetically(data) {
 }
 
 function check_empty_basket() {
-  if (basket.length == 0) {
-    const p = document.createElement("p");
-    p.textContent = "Your basket is empty!";
-    document.getElementById("basket_content").appendChild(p);
-    notify({
-      message: `Your basket is empty!`,
-      timeout: 2,
-    });
-    return;
+  const basket_status = document.getElementById("basket_status");
+  if (document.querySelectorAll("#basket_content div p").length === 0) {
+    basket_status.textContent = "Your basket is empty!";
+  } else {
+    basket_status.textContent = "";
   }
 }
 
-function update_basket(product) {
+function update_basket(product, quantity) {
   const basket_content = document.getElementById("basket_content");
-  const exists = array_remove_if_exists(basket, product);
-  if (!exists) {
-    basket.push(product);
-    debug && console.log(`added ${product}`);
-  } else {
-    debug && console.log(`removed ${product}`);
+
+  document.getElementById(`shop_${product}`).style.backgroundColor = "green";
+
+  if (document.getElementById(`basket_${product}`)) {
+    // prevent duplicates
+    document.getElementById(`basket_${product}`).remove();
   }
 
-  document.querySelectorAll("p").forEach((p) => {
-    if (p.textContent.includes(product)) {
-      p.style.backgroundColor =
-        p.style.backgroundColor == "green" ? "rgba(0, 0, 0, 0.5)" : "green";
-    }
+  const item = document.createElement("div");
+  const p = document.createElement("p");
+  item.id = `basket_${product}`;
+  item.classList.add("typical_container", "basket_content_product");
+  p.textContent = `${product} x${quantity}`;
+
+  item.addEventListener("click", () => {
+    item.remove();
+    check_empty_basket();
+    document.getElementById(`shop_${product}`).style.backgroundColor =
+      "rgba(0, 0, 0, 0.5)";
   });
 
-  basket_content.innerHTML = "";
-  for (let i = 0; i < basket.length; i++) {
-    const item = document.createElement("div");
-    const p = document.createElement("p");
-    item.classList.add("typical_container", "basket_content_product");
-    p.textContent = basket[i];
-
-    item.addEventListener("click", () => {
-      update_basket(basket[i]);
-    });
-
-    item.appendChild(p);
-    basket_content.appendChild(item);
-  }
+  item.appendChild(p);
+  basket_content.appendChild(item);
 
   check_empty_basket();
 }
@@ -114,7 +103,7 @@ async function load_dynamic_categories() {
     const site_data = await site_json.json();
     entries_data = sortCategoriesAlphabetically(await entries_json.json());
 
-    document.title = site_data[0].author;
+    document.title = site_data[0].product;
 
     for (const category in entries_data) {
       debug && console.log(`Category: ${category}`);
@@ -129,14 +118,32 @@ async function load_dynamic_categories() {
 
       entries_data[category].forEach((item) => {
         debug && console.log(`- ${item}`);
+        const elem_item = document.createElement("div");
         const p = document.createElement("p");
-        p.textContent = item;
+        const quantity = document.createElement("input");
 
-        p.addEventListener("click", () => {
-          update_basket(item);
+        elem_item.id = `shop_${item}`;
+        elem_item.classList.add("product");
+        quantity.type = "number";
+        quantity.min = 1;
+        quantity.max = 1000;
+        quantity.step = 1;
+        quantity.value = 1;
+
+        quantity.addEventListener("input", function (event) {
+          elem_item.setAttribute("quantity", event.target.value); // inject the quantity into the element directly
+          update_basket(item, 0);
+          update_basket(item, event.target.value);
         });
 
-        elem_category.appendChild(p);
+        p.textContent = item;
+        p.addEventListener("click", () => {
+          update_basket(item, 1);
+        });
+
+        elem_item.appendChild(quantity);
+        elem_category.appendChild(elem_item);
+        elem_item.appendChild(p);
       });
 
       document.getElementById("categories").appendChild(elem_category);
@@ -156,18 +163,17 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
     // sort
+    const products = document.querySelectorAll("#basket_content div p");
     let tmp = [];
     for (const category in entries_data) {
       entries_data[category].forEach((core_product) => {
-        // check if basket has core_product
-        basket.forEach((basket_product) => {
-          if (core_product === basket_product) {
-            tmp.push(basket_product);
+        products.forEach((p) => {
+          if (p.textContent.includes(core_product)) {
+            tmp.push(p.textContent);
           }
         });
       });
     }
-
     navigator.clipboard
       .writeText(tmp.join("\n"))
       .then(() => {
@@ -207,6 +213,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  window.onerror = function (message, source, lineno, colno, error) {
+    notify({
+      message: `An error occurred:
+        \nMessage: ${message}
+        \nSource: ${source}
+        \nLine: ${lineno}
+        \nColumn: ${colno}
+        \nError object: ${error ? error.stack : "N/A"}`,
+      timeout: 300,
+    });
+  };
+
   await load_dynamic_categories();
+  check_empty_basket();
   cast_loading_screen(false);
 });
