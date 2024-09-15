@@ -1,0 +1,67 @@
+/* This .css file shall only contain a global structure which can be shared across all sub projects */
+
+html,
+body {
+  line-height: 1.4;
+  font-weight: normal;
+  font-size: medium;
+  color: black;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  font-size: medium;
+}
+
+li {
+  font-size: medium;
+}
+
+img {
+  pointer-events: none;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: fit-content;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.socials li {
+  border-radius: 12px;
+  font-size: large;
+  background-color: rgba(255, 255, 255, 0.25);
+  color: white;
+  padding: 0.5px;
+  min-height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sub-icon {
+  font-size: xx-large;
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

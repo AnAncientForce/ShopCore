@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"></html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="assets/favicon.gif" type="image/x-icon" />
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div id="notification">...</div>
+    <div id="loading-screen">
+      <div id="loading-square-inner"></div>
+    </div>
+
+    <div id="wallpaper"></div>
+
+    <div class="center">
+      <h1>
+        Welcome to
+        <a href="https://github.com/AnAncientForce/ShopCore">ShopCore</a>!
+      </h1>
+    </div>
+    <div class="center">
+      <div id="categories"></div>
+      <div id="side-pan">
+        <div id="help">
+          <img class="icon" src="assets/icon-for-help-3-1378617784.png" />
+          <p>
+            (1) Tap an item from the left hand side to add it to your basket
+          </p>
+          <p>
+            (2) Tap an item from the right hand side to remove it from your
+            basket
+          </p>
+          <p>(3) When you are done, tap "Copy"</p>
+          <p style="color: red">
+            ⚠️ Refreshing or closing this tab will erase your basket
+          </p>
+        </div>
+        <div class="center">
+          <div id="copy" class="typical_container">Copy</div>
+        </div>
+        <div id="basket" class="typical_container">
+          <img class="icon" src="assets/4283893-1638626317.png" />
+          <div id="basket_content">
+            <p>Your basket is empty!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
