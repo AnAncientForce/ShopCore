@@ -3,11 +3,12 @@
     "author": "AnAncientForce",
     "product": "ShopCore",
     "repo": "https://github.com/AnAncientForce/ShopCore",
-    "last_build": "15/09/2024"
+    "last_build": "2024/09/16"
   },
   {
     "changelog": {
-      "2024-09-2024": "Release"
+      "2024-09-16": "Editor",
+      "2024-09-15": "Release"
     }
   }
 ]

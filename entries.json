@@ -15,7 +15,6 @@
     "Tomatoes",
     "Cucumber",
     "Salad Leaves",
-    "Peppers",
     "Spring Onions",
     "Coleslaw"
   ],
@@ -88,6 +87,7 @@
     "Marshmallows"
   ],
   "Drinks": [
+    "Mogu Mogu",
     "Appletise",
     "Coke Zero",
     "Cranberry Juice",

@@ -21,34 +21,60 @@
         <a href="https://github.com/AnAncientForce/ShopCore">ShopCore</a>!
       </h1>
     </div>
-    <div class="center">
-      <div id="categories"></div>
-      <div id="side-pan">
-        <div id="help">
-          <img class="icon" src="assets/icon-for-help-3-1378617784.png" />
-          <p>
-            (1) Tap an item from the left hand side to add it to your basket
-          </p>
-          <p>
-            (2) Tap an item from the right hand side to remove it from your
-            basket
-          </p>
-          <p>(3) When you are done, tap "Copy"</p>
-          <p style="color: red">
-            ⚠️ Refreshing or closing this tab will erase your basket
-          </p>
-        </div>
-        <div class="center">
-          <div id="copy" class="typical_container">Copy</div>
-        </div>
-        <div id="basket" class="typical_container">
-          <img class="icon" src="assets/4283893-1638626317.png" />
-          <div id="basket_content">
-            <p id="basket_status"></p>
+
+    <section id="shop">
+      <div class="center">
+        <div id="categories"></div>
+        <div class="side-pan">
+          <div id="help">
+            <img class="icon" src="assets/icon-for-help-3-1378617784.png" />
+            <p>
+              (1) Tap an item from the left hand side to add it to your basket
+            </p>
+            <p>
+              (2) Tap an item from the right hand side to remove it from your
+              basket
+            </p>
+            <p>(3) When you are done, tap "Copy"</p>
+            <p style="color: red">
+              ⚠️ Refreshing or closing this tab will erase your basket
+            </p>
+          </div>
+          <div class="center">
+            <div id="copy" class="typical_container">Copy</div>
+            <div id="editor" class="typical_container">Editor</div>
+          </div>
+          <div id="basket" class="typical_container">
+            <img class="icon" src="assets/4283893-1638626317.png" />
+            <div id="basket_content">
+              <p id="basket_status"></p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
+    <section id="editor">
+      <div class="center">
+        <div id="editor_content"></div>
+        <div class="side-pan">
+          <div class="typical_container">
+            <img class="icon" src="assets/icon-for-help-3-1378617784.png" />
+            <p>(1) Select a category</p>
+            <p>(2) Tap 'Add Product', enter the product name</p>
+            <p>(Hint) Tap 🗑️ to erase an item from your custom list</p>
+            <p style="color: red">
+              ⚠️ If your browser is set to delete cookies upon exit, your list
+              will be erased.
+            </p>
+          </div>
+          <div id="editor_add" class="typical_container">Add Product</div>
+          <div id="editor_save" class="typical_container">Save</div>
+          <div id="editor_load" class="typical_container">Load</div>
+          <div id="editor_reset" class="typical_container">Reset</div>
+          <div id="editor_leave" class="typical_container">Leave</div>
+        </div>
+      </div>
+    </section>
     <script type="module" src="index.js"></script>
   </body>
 </html>

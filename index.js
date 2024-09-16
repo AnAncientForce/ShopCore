@@ -1,5 +1,6 @@
 import { isMobileDevice } from "../modules/device.js";
 import { notify } from "../modules/notify.js";
+import { load_editor_categories, load_custom_list } from "./modules/editor.js";
 
 const msg_success = "[✔️] Success";
 const msg_err = "[❌] Error";
@@ -9,6 +10,8 @@ let cd = false;
 let total_network_usage = 0;
 let debug = document.URL === "http://127.0.0.1:5500/";
 let entries_data;
+let SITE;
+let DEFAULT_ENTRIES;
 
 function array_remove_if_exists(array, itemName) {
   const index = array.indexOf(itemName);
@@ -30,6 +33,21 @@ function track_network_usage(elem) {
     });
 }
 
+export function changeSection(args) {
+  const sections = document.querySelectorAll("section");
+  sections.forEach((section) => {
+    if (section.tagName === "SECTION") {
+      if (args?.id) {
+        if (section.id === args?.id) {
+          section.style.display = "block";
+        } else {
+          section.style.display = "none";
+        }
+      }
+    }
+  });
+}
+
 function cooldown(duration) {
   cd = !cd;
   setTimeout(function () {
@@ -49,7 +67,7 @@ function cast_loading_screen(state) {
   }
 }
 
-function sortCategoriesAlphabetically(data) {
+export function sortCategoriesAlphabetically(data) {
   const tmp = {};
   for (const category in data) {
     tmp[category] = data[category].slice().sort((a, b) => a.localeCompare(b));
@@ -96,67 +114,76 @@ function update_basket(product, quantity) {
 }
 
 async function load_dynamic_categories() {
-  try {
-    const site_json = await fetch("site.json");
-    const entries_json = await fetch("entries.json");
+  document.getElementById("categories").innerHTML = "";
 
-    const site_data = await site_json.json();
-    entries_data = sortCategoriesAlphabetically(await entries_json.json());
+  // use custom list if exists, otherwise use default
+  const custom_list = load_custom_list();
+  if (custom_list) {
+    entries_data = sortCategoriesAlphabetically(custom_list);
+  } else {
+    entries_data = DEFAULT_ENTRIES;
+  }
 
-    document.title = site_data[0].product;
+  for (const category in entries_data) {
+    debug && console.log(`Category: ${category}`);
 
-    for (const category in entries_data) {
-      debug && console.log(`Category: ${category}`);
+    const elem_category = document.createElement("div");
+    const elem_category_title = document.createElement("h1");
 
-      const elem_category = document.createElement("div");
-      const elem_category_title = document.createElement("h1");
+    elem_category_title.textContent = category;
 
-      elem_category_title.textContent = category;
+    elem_category.classList.add("sub_category");
+    elem_category.appendChild(elem_category_title);
 
-      elem_category.classList.add("sub_category");
-      elem_category.appendChild(elem_category_title);
+    entries_data[category].forEach((item) => {
+      debug && console.log(`- ${item}`);
+      const elem_item = document.createElement("div");
+      const p = document.createElement("p");
+      const quantity = document.createElement("input");
 
-      entries_data[category].forEach((item) => {
-        debug && console.log(`- ${item}`);
-        const elem_item = document.createElement("div");
-        const p = document.createElement("p");
-        const quantity = document.createElement("input");
+      elem_item.id = `shop_${item}`;
+      elem_item.classList.add("product");
+      quantity.type = "number";
+      quantity.min = 1;
+      quantity.max = 1000;
+      quantity.step = 1;
+      quantity.value = 1;
 
-        elem_item.id = `shop_${item}`;
-        elem_item.classList.add("product");
-        quantity.type = "number";
-        quantity.min = 1;
-        quantity.max = 1000;
-        quantity.step = 1;
-        quantity.value = 1;
-
-        quantity.addEventListener("input", function (event) {
-          elem_item.setAttribute("quantity", event.target.value); // inject the quantity into the element directly
-          update_basket(item, 0);
-          update_basket(item, event.target.value);
-        });
-
-        p.textContent = item;
-        p.addEventListener("click", () => {
-          update_basket(item, 1);
-        });
-
-        elem_item.appendChild(quantity);
-        elem_category.appendChild(elem_item);
-        elem_item.appendChild(p);
+      quantity.addEventListener("input", function (event) {
+        elem_item.setAttribute("quantity", event.target.value); // inject the quantity into the element directly
+        update_basket(item, 0);
+        update_basket(item, event.target.value);
       });
 
-      document.getElementById("categories").appendChild(elem_category);
-    }
-  } catch (error) {
-    console.error("Error fetching JSON file:", error);
+      p.textContent = item;
+      p.addEventListener("click", () => {
+        update_basket(item, 1);
+      });
+
+      elem_item.appendChild(quantity);
+      elem_category.appendChild(elem_item);
+      elem_item.appendChild(p);
+    });
+
+    document.getElementById("categories").appendChild(elem_category);
   }
+}
+
+export async function reloadShop() {
+  cast_loading_screen(true);
+  await load_dynamic_categories();
+  check_empty_basket();
+  changeSection({
+    id: "shop",
+  });
+  cast_loading_screen(false);
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
   loading_screen = document.getElementById("loading-screen");
-
-  cast_loading_screen(true);
+  SITE = await (await fetch("site.json")).json();
+  DEFAULT_ENTRIES = await (await fetch("entries.json")).json();
+  document.title = SITE[0].product;
 
   document.getElementById("copy").addEventListener("click", () => {
     if (check_empty_basket()) {
@@ -190,12 +217,26 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
   });
 
+  document.getElementById("editor").addEventListener("click", async () => {
+    cast_loading_screen(true);
+    await load_editor_categories();
+    changeSection({
+      id: "editor",
+    });
+    cast_loading_screen(false);
+  });
+
   document.addEventListener("keydown", (event) => {
     switch (event.key) {
       case "p":
         notify({
           message: `${total_network_usage.toFixed(2)} MB`,
           timeout: 2,
+        });
+        break;
+      case "h":
+        changeSection({
+          id: "editor",
         });
         break;
     }
@@ -225,7 +266,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   };
 
-  await load_dynamic_categories();
-  check_empty_basket();
-  cast_loading_screen(false);
+  await reloadShop();
 });

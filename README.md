@@ -1,1 +1,1 @@
-ShopCore is a utility to help user's create their digital shopping list.
+[ShopCore](https://anancientshop.netlify.app/) is a utility to help users create their digital shopping lists.

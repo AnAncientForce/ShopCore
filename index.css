@@ -107,7 +107,7 @@ a {
 
 /* _________________________ ShopCore _________________________ */
 
-#side-pan {
+.side-pan {
   width: 30%;
 }
 
@@ -132,7 +132,8 @@ a {
   height: 10vh;
 }
 
-#categories {
+#categories,
+#editor_content {
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 16px;
   width: 70%;
