@@ -12,6 +12,7 @@ let debug = document.URL === "http://127.0.0.1:5500/";
 let entries_data;
 let SITE;
 let DEFAULT_ENTRIES;
+let LAST_SELECTED_PRODUCT;
 
 function array_remove_if_exists(array, itemName) {
   const index = array.indexOf(itemName);
@@ -84,31 +85,56 @@ function check_empty_basket() {
   }
 }
 
-function update_basket(product, quantity) {
+function update_basket(args) {
+  if (!args?.product || !args?.quantity) {
+    console.error("missing args");
+    return;
+  }
   const basket_content = document.getElementById("basket_content");
 
-  document.getElementById(`shop_${product}`).style.backgroundColor = "green";
+  if (document.getElementById(`basket_${args.product}`)) {
+    // remove if exists
+    document.getElementById(`basket_${args.product}`).remove();
+    document.getElementById(`shop_${args.product}`).style.backgroundColor =
+      "rgba(0, 0, 0, 0.5)";
 
-  if (document.getElementById(`basket_${product}`)) {
-    // prevent duplicates
-    document.getElementById(`basket_${product}`).remove();
+    if (args.quantity === 1) {
+      /*
+      If the quantity is 1, the product was toggled, so toggle between adding it and removing it.
+      If the quantity is > 1, the same product was added but with a different quantity was added, so continue.
+      */
+      return;
+    }
   }
+
+  document.getElementById(`shop_${args.product}`).style.backgroundColor =
+    "green";
 
   const item = document.createElement("div");
   const p = document.createElement("p");
-  item.id = `basket_${product}`;
+  item.id = `basket_${args.product}`;
   item.classList.add("typical_container", "basket_content_product");
-  p.textContent = `${product} x${quantity}`;
+
+  if (args.quantity > 1) {
+    // null check
+    p.textContent = `${args.product} x${args.quantity}`;
+  } else {
+    p.textContent = `${args.product}`;
+  }
 
   item.addEventListener("click", () => {
     item.remove();
     check_empty_basket();
-    document.getElementById(`shop_${product}`).style.backgroundColor =
+    document.getElementById(`shop_${args.product}`).style.backgroundColor =
       "rgba(0, 0, 0, 0.5)";
   });
 
   item.appendChild(p);
   basket_content.appendChild(item);
+
+  // Lookup
+  LAST_SELECTED_PRODUCT = args?.product;
+  document.getElementById("lookup").classList.add("play");
 
   check_empty_basket();
 }
@@ -151,13 +177,18 @@ async function load_dynamic_categories() {
 
       quantity.addEventListener("input", function (event) {
         elem_item.setAttribute("quantity", event.target.value); // inject the quantity into the element directly
-        update_basket(item, 0);
-        update_basket(item, event.target.value);
+        update_basket({
+          product: item,
+          quantity: event.target.value,
+        });
       });
 
       p.textContent = item;
       p.addEventListener("click", () => {
-        update_basket(item, 1);
+        update_basket({
+          product: item,
+          quantity: 1,
+        });
       });
 
       elem_item.appendChild(quantity);
@@ -184,6 +215,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   SITE = await (await fetch("site.json")).json();
   DEFAULT_ENTRIES = await (await fetch("entries.json")).json();
   document.title = SITE[0].product;
+
+  document
+    .getElementById("lookup")
+    .addEventListener("animationend", function () {
+      this.classList.remove("play");
+    });
 
   document.getElementById("copy").addEventListener("click", () => {
     if (check_empty_basket()) {
@@ -224,6 +261,17 @@ document.addEventListener("DOMContentLoaded", async () => {
       id: "editor",
     });
     cast_loading_screen(false);
+  });
+
+  document.getElementById("lookup").addEventListener("click", () => {
+    if (LAST_SELECTED_PRODUCT) {
+      window.open(
+        `https://duckduckgo.com/?q=${encodeURIComponent(
+          LAST_SELECTED_PRODUCT
+        )}&iax=images&ia=images`,
+        "_blank"
+      );
+    }
   });
 
   document.addEventListener("keydown", (event) => {

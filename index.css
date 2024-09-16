@@ -107,6 +107,12 @@ a {
 
 /* _________________________ ShopCore _________________________ */
 
+input {
+  font-size: large;
+  width: 15%;
+  margin-right: 5%;
+}
+
 .side-pan {
   width: 30%;
 }
@@ -115,7 +121,6 @@ a {
   background-color: rgba(255, 255, 255, 0.5);
   margin: 2.5%;
   border-radius: 12px;
-  width: 90%;
   padding: 2.5%;
   text-align: center;
 }
@@ -161,8 +166,21 @@ a {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-input {
-  font-size: large;
-  width: 15%;
-  margin-right: 5%;
+#lookup.play {
+  animation: tilt 1s ease-in-out 1;
+}
+
+@keyframes tilt {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(10deg);
+  }
+  75% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }

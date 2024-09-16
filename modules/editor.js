@@ -1,9 +1,5 @@
 import { notify } from "./notify.js";
-import {
-  reloadShop,
-  changeSection,
-  sortCategoriesAlphabetically,
-} from "../index.js";
+import { reloadShop, sortCategoriesAlphabetically } from "../index.js";
 
 const msg_success = "[✔️] Success";
 const msg_err = "[❌] Error";
@@ -17,8 +13,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("editor_add").addEventListener("click", () => {
     if (SELECTED_CAT) {
       let product = prompt("Product Name");
-      if (product.length > 0) {
-        create_editor_product(SELECTED_CAT, product);
+      if (product) {
+        // null check
+        if (product.length > 0) {
+          create_editor_product(SELECTED_CAT, product);
+        }
       }
     } else {
       notify({
@@ -74,6 +73,7 @@ function create_editor_product(elem_category, item) {
     //
   });
 
+  elem_trash.classList.add("typical_container");
   elem_trash.textContent = "🗑️";
   elem_trash.addEventListener("click", () => {
     elem_item.remove();
