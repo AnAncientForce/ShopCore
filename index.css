@@ -33,6 +33,24 @@ a {
   justify-content: center;
 }
 
+/* _________________________ screen dim _________________________ */
+
+#black-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  background-color: black;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+  pointer-events: none;
+}
+#black-overlay.off {
+  opacity: 0;
+}
+
 /* _________________________ Loading _________________________ */
 
 #loading-square-inner {
@@ -166,8 +184,64 @@ input {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+#splash {
+  text-align: center;
+}
+
+.splash_txt {
+  font-size: 3em;
+}
+.splash_txt.slide_L {
+  animation: fadeIn 1s forwards, slide_L 1s forwards;
+}
+.splash_txt.slide_R {
+  animation: fadeIn 1s forwards, slide_R 1s forwards;
+}
+
 #lookup.play {
   animation: tilt 1s ease-in-out 1;
+}
+
+#PRINT_LIST_CONTENT {
+  text-align: center;
+  font-size: larger;
+}
+
+#print_leave {
+  text-align: center;
+  font-size: xx-large;
+  margin: 5%;
+}
+
+@keyframes slide_L {
+  from {
+    color: white;
+    transform: translateX(5vw) scale(1) rotate(-10deg);
+  }
+  to {
+    color: #646cff;
+    transform: translateX(-5vw) scale(2) rotate(10deg);
+  }
+}
+
+@keyframes slide_R {
+  from {
+    color: white;
+    transform: translateX(-5vw) scale(1) rotate(10deg);
+  }
+  to {
+    color: #646cff;
+    transform: translateX(5vw) scale(2) rotate(-10deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes tilt {

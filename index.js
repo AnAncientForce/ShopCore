@@ -1,5 +1,6 @@
 import { isMobileDevice } from "../modules/device.js";
 import { notify } from "../modules/notify.js";
+import { splash } from "../modules/splash.js";
 import { load_editor_categories, load_custom_list } from "./modules/editor.js";
 
 const msg_success = "[✔️] Success";
@@ -32,6 +33,15 @@ function track_network_usage(elem) {
       debug && console.log("Blob size:", sizeInMB.toFixed(2), "MB");
       total_network_usage += sizeInMB;
     });
+}
+
+export function screen_dim() {
+  document.getElementById("black-overlay").classList.toggle("off");
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, 0.5 * 1000);
+  });
 }
 
 export function changeSection(args) {
@@ -202,15 +212,40 @@ async function load_dynamic_categories() {
 
 export async function reloadShop() {
   cast_loading_screen(true);
+  document.getElementById("welcome").style.display = "";
   await load_dynamic_categories();
   check_empty_basket();
-  changeSection({
-    id: "shop",
-  });
   cast_loading_screen(false);
 }
 
+function GET_LIST() {
+  if (check_empty_basket()) {
+    return;
+  }
+  // sort
+  const products = document.querySelectorAll("#basket_content div p");
+  let tmp = [];
+  for (const category in entries_data) {
+    entries_data[category].forEach((core_product) => {
+      products.forEach((p) => {
+        if (p.textContent.includes(core_product)) {
+          tmp.push(p.textContent);
+        }
+      });
+    });
+  }
+
+  return tmp.join("\n");
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
+  changeSection({
+    id: "splash",
+  });
+  screen_dim().then(() => {
+    splash();
+  });
+
   loading_screen = document.getElementById("loading-screen");
   SITE = await (await fetch("site.json")).json();
   DEFAULT_ENTRIES = await (await fetch("entries.json")).json();
@@ -222,24 +257,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       this.classList.remove("play");
     });
 
+  document.getElementById("print_leave").addEventListener("click", () => {
+    changeSection({
+      id: "shop",
+    });
+  });
+
   document.getElementById("copy").addEventListener("click", () => {
-    if (check_empty_basket()) {
-      return;
-    }
-    // sort
-    const products = document.querySelectorAll("#basket_content div p");
-    let tmp = [];
-    for (const category in entries_data) {
-      entries_data[category].forEach((core_product) => {
-        products.forEach((p) => {
-          if (p.textContent.includes(core_product)) {
-            tmp.push(p.textContent);
-          }
-        });
-      });
-    }
     navigator.clipboard
-      .writeText(tmp.join("\n"))
+      .writeText(GET_LIST())
       .then(() => {
         notify({
           message: `Basket copied to clipboard!`,
@@ -252,6 +278,15 @@ document.addEventListener("DOMContentLoaded", async () => {
           timeout: 5,
         });
       });
+  });
+
+  document.getElementById("print").addEventListener("click", () => {
+    document.getElementById("welcome").style.display = "none";
+    document.getElementById("PRINT_LIST_CONTENT").innerText = GET_LIST();
+    changeSection({
+      id: "print",
+    });
+    print();
   });
 
   document.getElementById("editor").addEventListener("click", async () => {

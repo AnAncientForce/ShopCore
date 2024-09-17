@@ -9,13 +9,14 @@
   </head>
   <body>
     <div id="notification">...</div>
+    <div id="black-overlay"></div>
     <div id="loading-screen">
       <div id="loading-square-inner"></div>
     </div>
 
     <div id="wallpaper"></div>
 
-    <div class="center">
+    <div id="welcome" class="center">
       <h1>
         Welcome to
         <a href="https://github.com/AnAncientForce/ShopCore">ShopCore</a>!
@@ -39,13 +40,14 @@
               (2) Tap an item from the right hand side to remove it from your
               basket
             </p>
-            <p>(3) When you are done, tap "Copy"</p>
+            <p>(3) When you are done, tap "Copy/Print"</p>
             <p style="color: red">
               ⚠️ Refreshing or closing this tab will erase your basket
             </p>
           </div>
-          <div class="center">
+          <div class="typical_container">
             <div id="copy" class="typical_container">Copy</div>
+            <div id="print" class="typical_container">Print</div>
             <div id="editor" class="typical_container">Editor</div>
           </div>
           <div id="basket" class="typical_container">
@@ -74,11 +76,18 @@
           <div id="editor_add" class="typical_container">Add Product</div>
           <div id="editor_save" class="typical_container">Save</div>
           <div id="editor_load" class="typical_container">Load</div>
+          <div id="editor_import" class="typical_container">Import</div>
+          <div id="editor_export" class="typical_container">Export</div>
           <div id="editor_reset" class="typical_container">Reset</div>
           <div id="editor_leave" class="typical_container">Leave</div>
         </div>
       </div>
     </section>
+    <section id="print" class="center">
+      <div id="PRINT_LIST_CONTENT"></div>
+      <div id="print_leave">🔙</div>
+    </section>
+    <section id="splash" class="center"></section>
     <script type="module" src="index.js"></script>
   </body>
 </html>

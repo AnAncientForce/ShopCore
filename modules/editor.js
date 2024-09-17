@@ -1,11 +1,17 @@
 import { notify } from "./notify.js";
-import { reloadShop, sortCategoriesAlphabetically } from "../index.js";
+import {
+  reloadShop,
+  changeSection,
+  sortCategoriesAlphabetically,
+} from "../index.js";
+import { isDebug } from "./common.js";
 
 const msg_success = "[✔️] Success";
 const msg_err = "[❌] Error";
-const debug = false;
 let SELECTED_CAT;
 let DEFAULT_ENTRIES;
+let IMPORTED_ENTRIES;
+let custom_list;
 
 document.addEventListener("DOMContentLoaded", async () => {
   DEFAULT_ENTRIES = await (await fetch("entries.json")).json();
@@ -28,25 +34,75 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   document.getElementById("editor_save").addEventListener("click", async () => {
-    await parse_and_save_custom_list(false);
+    parse_and_save_custom_list("BUILD");
   });
 
   document.getElementById("editor_load").addEventListener("click", () => {
     load_custom_list();
   });
 
-  document
-    .getElementById("editor_reset")
-    .addEventListener("click", async () => {
-      if (confirm("Reset to factory default? Is this OK?") == true) {
-        await parse_and_save_custom_list(true);
-      }
-    });
+  document.getElementById("editor_export").addEventListener("click", () => {
+    export_custom_list();
+  });
+
+  document.getElementById("editor_import").addEventListener("click", () => {
+    import_custom_list();
+  });
+
+  document.getElementById("editor_reset").addEventListener("click", () => {
+    if (confirm("Reset to factory default? Is this OK?")) {
+      parse_and_save_custom_list("RESET");
+    }
+  });
 
   document.getElementById("editor_leave").addEventListener("click", () => {
     reloadShop();
+    changeSection({
+      id: "shop",
+    });
   });
 });
+
+function import_custom_list() {
+  const f = document.createElement("input");
+  f.type = "file";
+  f.id = "fileInput";
+  f.accept = ".json";
+  f.style.display = "none";
+  document.body.appendChild(f);
+  f.addEventListener("change", function (event) {
+    if (event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        try {
+          isDebug() && console.log(JSON.parse(e.target.result));
+          IMPORTED_ENTRIES = JSON.parse(e.target.result);
+          parse_and_save_custom_list("IMPORT");
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      reader.readAsText(event.target.files[0]);
+    }
+  });
+  f.click();
+  f.remove();
+}
+
+function export_custom_list() {
+  console.log(custom_list);
+  if (custom_list) {
+    const blob = new Blob([JSON.stringify(custom_list, null, 2)], {
+      type: "application/json",
+    });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "ShopCore.json";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+}
 
 function validate_selected_category(category) {
   if (SELECTED_CAT) {
@@ -89,7 +145,7 @@ export async function load_editor_categories() {
 
   // use custom list if exists, otherwise use default
   let entries_data;
-  const custom_list = load_custom_list();
+  custom_list = load_custom_list();
   if (custom_list) {
     entries_data = sortCategoriesAlphabetically(custom_list);
   } else {
@@ -97,7 +153,7 @@ export async function load_editor_categories() {
   }
 
   for (const category in entries_data) {
-    debug && console.log(`Category: ${category}`);
+    isDebug() && console.log(`Category: ${category}`);
 
     const elem_category = document.createElement("div");
     const elem_category_title = document.createElement("h1");
@@ -113,7 +169,7 @@ export async function load_editor_categories() {
     });
 
     entries_data[category].forEach((item) => {
-      debug && console.log(`- ${item}`);
+      isDebug() && console.log(`- ${item}`);
       create_editor_product(elem_category, item);
     });
 
@@ -125,13 +181,13 @@ export function load_custom_list() {
   console.log(
     "_________________________ LOAD COOKIE _________________________"
   );
-  const CUSTOM_LIST = decodeURIComponent(document.cookie).split(";");
-  for (let i = 0; i < CUSTOM_LIST.length; i++) {
-    let cookie = CUSTOM_LIST[i].trim();
+  const LIST = decodeURIComponent(document.cookie).split(";");
+  for (let i = 0; i < LIST.length; i++) {
+    let cookie = LIST[i].trim();
     if (cookie.indexOf("ShopCore=") === 0) {
       const jsonString = cookie.substring("ShopCore=".length, cookie.length);
-      console.log(JSON.parse(jsonString));
-      debug &&
+      isDebug() && console.log(JSON.parse(jsonString));
+      isDebug() &&
         notify({
           message: `Load Operation: ${msg_success}`,
           timeout: 1,
@@ -141,24 +197,46 @@ export function load_custom_list() {
   }
 }
 
-async function parse_and_save_custom_list(reset) {
+function parse_and_save_custom_list(operation) {
   let jsonData = {};
-  console.log("RESET", reset);
-  if (reset) {
-    jsonData = DEFAULT_ENTRIES;
-  } else {
-    const categories = document.querySelectorAll(".sub_category");
-    categories.forEach((category) => {
-      jsonData[category.querySelector("h1").textContent] = [];
-      const products = category.querySelectorAll("p");
-      products.forEach((product) => {
-        jsonData[category.querySelector("h1").textContent].push(
-          product.textContent
-        );
+  switch (operation) {
+    case "RESET":
+      isDebug() &&
+        notify({
+          message: `Reset List`,
+          timeout: 1,
+        });
+      jsonData = DEFAULT_ENTRIES;
+      break;
+    case "IMPORT":
+      isDebug() &&
+        notify({
+          message: `Import List`,
+          timeout: 1,
+        });
+      jsonData = IMPORTED_ENTRIES;
+      break;
+    case "BUILD":
+      isDebug() &&
+        notify({
+          message: `Build List`,
+          timeout: 1,
+        });
+      const categories = document.querySelectorAll(".sub_category");
+      categories.forEach((category) => {
+        jsonData[category.querySelector("h1").textContent] = [];
+        const products = category.querySelectorAll("p");
+        products.forEach((product) => {
+          jsonData[category.querySelector("h1").textContent].push(
+            product.textContent
+          );
+        });
       });
-    });
+      break;
+    default:
+      console.error("No operation ?");
   }
-  console.log(jsonData);
+  isDebug() && console.log(jsonData);
   console.log("_________________________ SAVING _________________________");
   document.cookie = `ShopCore=${encodeURIComponent(
     JSON.stringify(jsonData)
@@ -169,5 +247,8 @@ async function parse_and_save_custom_list(reset) {
     message: `Save Operation: ${msg_success}`,
     timeout: 1,
   });
-  await reloadShop();
+  reloadShop();
+  changeSection({
+    id: "shop",
+  });
 }

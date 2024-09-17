@@ -3,10 +3,11 @@
     "author": "AnAncientForce",
     "product": "ShopCore",
     "repo": "https://github.com/AnAncientForce/ShopCore",
-    "last_build": "2024/09/17"
+    "last_build": "2024/09/18"
   },
   {
     "changelog": {
+      "2024-09-17": "Splash, Import, Export, Print",
       "2024-09-16": "Editor",
       "2024-09-15": "Release"
     }
