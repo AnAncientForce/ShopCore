@@ -189,7 +189,7 @@ input {
 }
 
 .splash_txt {
-  font-size: 3em;
+  font-size: 5vh;
 }
 .splash_txt.slide_L {
   animation: fadeIn 1s forwards, slide_L 1s forwards;

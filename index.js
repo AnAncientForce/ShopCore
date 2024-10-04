@@ -229,7 +229,12 @@ function GET_LIST() {
     entries_data[category].forEach((core_product) => {
       products.forEach((p) => {
         if (p.textContent.includes(core_product)) {
-          tmp.push(p.textContent);
+          if (!tmp.some((prod) => prod === core_product)) {
+            tmp.push(p.textContent);
+            console.log(p.textContent);
+          } else {
+            console.log(`problematic (${p.textContent})`); // occurs when the same word is present in another product
+          }
         }
       });
     });
