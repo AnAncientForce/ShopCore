@@ -222,18 +222,16 @@ function GET_LIST() {
   if (check_empty_basket()) {
     return;
   }
+
   // sort
   const products = document.querySelectorAll("#basket_content div p");
   let tmp = [];
   for (const category in entries_data) {
     entries_data[category].forEach((core_product) => {
       products.forEach((p) => {
-        if (p.textContent.includes(core_product)) {
-          if (!tmp.some((prod) => prod === core_product)) {
+        if (p.textContent === core_product) {
+          if (!tmp.some((product) => product === core_product)) {
             tmp.push(p.textContent);
-            console.log(p.textContent);
-          } else {
-            console.log(`problematic (${p.textContent})`); // occurs when the same word is present in another product
           }
         }
       });
