@@ -14,6 +14,7 @@ let entries_data;
 let SITE;
 let DEFAULT_ENTRIES;
 let LAST_SELECTED_PRODUCT;
+let LAST_AUTO_SELECTED_SHOP_PRODUCT;
 
 function array_remove_if_exists(array, itemName) {
   const index = array.indexOf(itemName);
@@ -312,18 +313,64 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  document
+    .getElementById("product_search")
+    .addEventListener("input", function (event) {
+      let search_query = event.target.value.toLowerCase();
+      searchLoop: for (const category in entries_data) {
+        for (let item of entries_data[category]) {
+          if (item.toLowerCase().startsWith(search_query)) {
+            debug && console.log("found:", item);
+            LAST_AUTO_SELECTED_SHOP_PRODUCT = item;
+            item = document.getElementById(`shop_${item}`);
+            item.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+              inline: "nearest",
+              offsetTop: 200,
+            });
+            item.focus();
+            item.style.animation = "search_highlight 1s forwards";
+            setTimeout(() => {
+              item.style.animation = "";
+            }, 1000);
+            break searchLoop;
+          }
+        }
+      }
+    });
+
+  document
+    .getElementById("product_search")
+    .addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        if (LAST_AUTO_SELECTED_SHOP_PRODUCT) {
+          update_basket({
+            product: LAST_AUTO_SELECTED_SHOP_PRODUCT,
+            quantity: 1,
+          });
+          LAST_AUTO_SELECTED_SHOP_PRODUCT = null;
+        }
+        event.target.value = "";
+      }
+    });
+
   document.addEventListener("keydown", (event) => {
     switch (event.key) {
       case "p":
+        /*
         notify({
           message: `${total_network_usage.toFixed(2)} MB`,
           timeout: 2,
         });
+        */
         break;
       case "h":
+        /*
         changeSection({
           id: "editor",
         });
+        */
         break;
     }
   });

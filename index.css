@@ -131,8 +131,20 @@ input {
   margin-right: 5%;
 }
 
+#basket {
+  max-height: 20vh;
+  overflow-y: scroll;
+}
+
+#product_search {
+  width: 90%;
+}
+
 .side-pan {
   width: 30%;
+  position: fixed;
+  top: 10%;
+  right: 0;
 }
 
 .typical_container {
@@ -211,6 +223,18 @@ input {
   text-align: center;
   font-size: xx-large;
   margin: 5%;
+}
+
+@keyframes search_highlight {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes slide_L {
