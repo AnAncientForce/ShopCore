@@ -131,11 +131,6 @@ input {
   margin-right: 5%;
 }
 
-#basket {
-  max-height: 20vh;
-  overflow-y: scroll;
-}
-
 #product_search {
   width: 90%;
 }
@@ -143,8 +138,10 @@ input {
 .side-pan {
   width: 30%;
   position: fixed;
-  top: 10%;
+  top: 0;
   right: 0;
+  max-height: 100vh;
+  overflow-y: scroll;
 }
 
 .typical_container {
