@@ -327,7 +327,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               inline: "nearest",
               offsetTop: 200,
             });
-            // item.focus();
+            item.focus();
             item.style.animation = "search_highlight 1s forwards";
             setTimeout(() => {
               item.style.animation = "";
@@ -342,6 +342,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     .getElementById("product_search")
     .addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
+        event.preventDefault();
         if (LAST_AUTO_SELECTED_SHOP_PRODUCT) {
           update_basket({
             product: LAST_AUTO_SELECTED_SHOP_PRODUCT,
