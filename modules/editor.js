@@ -1,10 +1,6 @@
 import { notify } from "./notify.js";
-import {
-  reloadShop,
-  changeSection,
-  sortCategoriesAlphabetically,
-} from "../index.js";
-import { isDebug } from "./common.js";
+import { reloadShop, sortCategoriesAlphabetically } from "../index.js";
+import { changeSection, isDebug } from "./common.js";
 
 const msg_success = "[✔️] Success";
 const msg_err = "[❌] Error";
@@ -14,7 +10,7 @@ let IMPORTED_ENTRIES;
 let custom_list;
 
 document.addEventListener("DOMContentLoaded", async () => {
-  DEFAULT_ENTRIES = await (await fetch("entries.json")).json();
+  DEFAULT_ENTRIES = await (await fetch("ShopCore.json")).json();
 
   document.getElementById("editor_add").addEventListener("click", () => {
     if (SELECTED_CAT) {
@@ -107,7 +103,7 @@ function export_custom_list() {
 function validate_selected_category(category) {
   if (SELECTED_CAT) {
     if (SELECTED_CAT !== category) {
-      SELECTED_CAT.style.backgroundColor = "rgba(255, 255, 255, 0.25)"; // remove old selection
+      SELECTED_CAT.style.backgroundColor = "transparent"; // remove old selection
     }
   }
   if (category) {
@@ -117,7 +113,7 @@ function validate_selected_category(category) {
 }
 
 function create_editor_product(elem_category, item) {
-  const elem_item = document.createElement("div");
+  const elem_item = document.createElement("button");
   const elem_trash = document.createElement("div");
   const p = document.createElement("p");
 
@@ -129,7 +125,7 @@ function create_editor_product(elem_category, item) {
     //
   });
 
-  elem_trash.classList.add("typical_container");
+  elem_trash.classList.add("trash");
   elem_trash.textContent = "🗑️";
   elem_trash.addEventListener("click", () => {
     elem_item.remove();
@@ -153,7 +149,7 @@ export async function load_editor_categories() {
   }
 
   for (const category in entries_data) {
-    isDebug() && console.log(`Category: ${category}`);
+    // isDebug() && console.log(`Category: ${category}`);
 
     const elem_category = document.createElement("div");
     const elem_category_title = document.createElement("h1");
@@ -169,7 +165,7 @@ export async function load_editor_categories() {
     });
 
     entries_data[category].forEach((item) => {
-      isDebug() && console.log(`- ${item}`);
+      // isDebug() && console.log(`- ${item}`);
       create_editor_product(elem_category, item);
     });
 
@@ -185,7 +181,13 @@ export function load_custom_list() {
   for (let i = 0; i < LIST.length; i++) {
     let cookie = LIST[i].trim();
     if (cookie.indexOf("ShopCore=") === 0) {
-      const jsonString = cookie.substring("ShopCore=".length, cookie.length);
+      const compressedString = cookie.substring(
+        "ShopCore=".length,
+        cookie.length
+      );
+      const jsonString =
+        LZString.decompressFromEncodedURIComponent(compressedString);
+      if (!jsonString) return null; // Handle potential decompression failure
       isDebug() && console.log(JSON.parse(jsonString));
       isDebug() &&
         notify({
@@ -195,6 +197,7 @@ export function load_custom_list() {
       return JSON.parse(jsonString);
     }
   }
+  return null; // Return null if no valid cookie is found
 }
 
 function parse_and_save_custom_list(operation) {
@@ -238,11 +241,15 @@ function parse_and_save_custom_list(operation) {
   }
   isDebug() && console.log(jsonData);
   console.log("_________________________ SAVING _________________________");
-  document.cookie = `ShopCore=${encodeURIComponent(
+
+  const compressed = LZString.compressToEncodedURIComponent(
     JSON.stringify(jsonData)
-  )}; expires=${new Date(
+  );
+
+  document.cookie = `ShopCore=${compressed}; expires=${new Date(
     "Thu, 31 Dec 2099 23:59:59 GMT"
   ).toUTCString()}; path=/`;
+
   notify({
     message: `Save Operation: ${msg_success}`,
     timeout: 1,

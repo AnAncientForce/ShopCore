@@ -1,5 +1,5 @@
-import { isDebug, delay } from "./common.js";
-import { screen_dim, changeSection } from "../index.js";
+import { changeSection, isDebug, delay } from "./common.js";
+import { screen_dim } from "../index.js";
 
 export async function splash() {
   if (!isDebug()) {

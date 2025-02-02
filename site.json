@@ -3,12 +3,12 @@
     "author": "AnAncientForce",
     "product": "ShopCore",
     "repo": "https://github.com/AnAncientForce/ShopCore",
-    "last_build": "2024/09/18"
-  },
-  {
+    "last_build": "2025/01/31",
     "changelog": {
-      "2024-09-17": "Splash, Import, Export, Print",
-      "2024-09-16": "Editor",
+      "2025-01-31": "Attempted to mimic android's material theme<br>Fixed product interactions<br>Fixed lists beyond 4096 bytes from saving<br>Updated UI placements<br>Updated internal list<br>Added emojis to category names<br>Implemented new guide sections",
+      "2024-10-17": "Implemented quick search function",
+      "2024-09-17": "Implemented splash & various new functions; import, export, print",
+      "2024-09-16": "Implemented editor",
       "2024-09-15": "Release"
     }
   }

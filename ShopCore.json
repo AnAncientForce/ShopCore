@@ -1,5 +1,5 @@
 {
-  "Fruit": [
+  "Fruit 🍊": [
     "Apples",
     "Avocados",
     "Blueberries",
@@ -8,31 +8,68 @@
     "Mangos",
     "Oranges",
     "Pears",
-    "Strawberries"
+    "Strawberries",
+    "Bananas",
+    "Guava",
+    "Lychee",
+    "Chinese Pear",
+    "Pineapple",
+    "Blackcurrents",
+    "Redcurrents",
+    "Cherries",
+    "Apricot",
+    "Peach",
+    "Nectarine",
+    "Gooseberry",
+    "Dragonfruit",
+    "Starfruit",
+    "Watermelon",
+    "Honeydew Melon",
+    "Cantaloupe",
+    "Galimelon"
   ],
-  "Salad": [
+
+  "Salad 🥗": [
     "Celery",
     "Tomatoes",
     "Cucumber",
     "Salad Leaves",
     "Spring Onions",
-    "Coleslaw"
+    "Coleslaw",
+    "Lettuce",
+    "Spinach",
+    "Radish",
+    "Mooli"
   ],
-  "Vegetables": [
+  "Vegetables 🥔": [
     "Cabbage",
     "Carrots",
     "Garlic",
+    "Ginger",
     "Green Beans",
     "Leeks",
     "Onions",
+    "Shallots",
     "Potatoes",
     "Baby Potatoes",
     "Mushrooms",
-    "Peppers",
+    "Capsicum Peppers",
     "Sweet Potato",
-    "Peas"
+    "Peas",
+    "Fresh Chillies",
+    "Okra",
+    "Cauliflower",
+    "Swede",
+    "Turnip",
+    "Parsnips",
+    "Aubergine",
+    "Kohlrabi",
+    "Rhubarb",
+    "Pumpkin",
+    "Butternut Squash",
+    "Bitter Melon"
   ],
-  "Meat": [
+  "Meat 🥩": [
     "Bacon",
     "Beef",
     "Chicken",
@@ -41,27 +78,78 @@
     "Mince",
     "Sausages",
     "Chicken Breast",
-    "Lambs Liver"
+    "Liver",
+    "Steaks",
+    "Ribs",
+    "Duck",
+    "Goose",
+    "Turkey",
+    "Pork"
   ],
-  "Seafood": ["Prawns", "Scallops"],
-  "Dairy": [
+  "Seafood 🦐": [
+    "Prawns",
+    "Scallops",
+    "Fish",
+    "Crab",
+    "Lobster",
+    "Scampi",
+    "Monk Fish",
+    "King Fish",
+    "Sword Fish",
+    "Fish Fingers",
+    "Fish Cakes",
+    "Octopus",
+    "Squid",
+    "Cod",
+    "Smoke Mackerel",
+    "Shrimp",
+    "Langoustines",
+    "Fish Pate"
+  ],
+  "Dairy 🐄": [
     "Butter",
     "Cheese",
     "Chocolate Milk",
     "Cream",
     "Milk",
     "Yoghurt",
-    "Mozzarella Pizza",
-    "Puff Pastry"
+    "Mozzarella Fresh",
+    "Puff Pastry",
+    "Mozzarella Grated",
+    "Swiss Cheese",
+    "Parmesan",
+    "Paneer",
+    "Haloumi",
+    "Emmental",
+    "Edam",
+    "Gruyere",
+    "Cottage Cheese",
+    "Cream Cheese",
+    "Asiago",
+    "Blue Cheese",
+    "Brie",
+    "Burrata",
+    "Camembert",
+    "Cheddar",
+    "Feta",
+    "Gouda",
+    "Havarti",
+    "Jaralsberg",
+    "Mascarpone",
+    "Provolone",
+    "Ricotta",
+    "String Cheese",
+    "Eggs"
   ],
-  "Dried": [
+  "Cupboard 🥡": [
+    "Pizzas",
+    "Pastas",
     "Baked Beans",
     "Cereal",
     "Chicken Gravy",
     "Chilli Sauce",
     "Coffee",
     "Drinking Chocolate",
-    "Eggs",
     "HP Sauce",
     "Jam",
     "Thick Cut Marmalade",
@@ -77,16 +165,25 @@
     "Worcestershire Sauce",
     "Tomato Puree",
     "Rice Krispies",
-    "Mung Beans"
-  ],
-  "Snacks": [
+    "Mung Beans",
+    "Lentls",
+    "Chickpeas",
+    "Channa Dal",
+    "Basmati Rice",
+    "Long Grain Rice",
+    "Jasmine Rice",
+    "Patna Rice",
+    "Brown Rice",
+    "Arborio Rice",
+    "Carnaroli Rice",
+    "Easy Cook Rice",
     "Ready Salted Crisps",
     "Salt and Vinegar Crisps",
     "Popcorn",
     "Potato Sticks",
     "Marshmallows"
   ],
-  "Drinks": [
+  "Drinks 🍹": [
     "Mogu Mogu",
     "Appletise",
     "Coke Zero",
@@ -95,12 +192,16 @@
     "Mango Juice",
     "Orange Juice",
     "Pear Juice",
-    "Water"
+    "Water",
+    "Sparkling Water",
+    "Cold Coffee",
+    "Milkshakes",
+    "Pop"
   ],
-  "Herbs and Spices": [
+  "Herbs and Spices 🌿": [
     "Coriander",
     "Garlic",
-    "Chillies",
+    "Dried Chillies",
     "Ginger",
     "Mint",
     "Meti",
@@ -118,13 +219,14 @@
     "Nutmeg",
     "Cinnamon",
     "Cloves",
-    "Fenugreek",
+    "Fenugreek Seeds",
+    "Dried Fenugreek Methi",
     "Anise",
     "Star Anise",
     "All Spice",
     "Curry Powder",
     "Mustard Seeds",
-    "Cardamom",
+    "Cardamoms",
     "Mace",
     "Sage",
     "Carom Seeds",
@@ -135,7 +237,7 @@
     "Green Peppercorns",
     "Asafoetida"
   ],
-  "Household": [
+  "Household 🏡": [
     "Bin Bags",
     "Bleach Spray",
     "Dishwasher Tablets",
@@ -149,29 +251,33 @@
     "Washing up Sponges",
     "Toilet Cleaner"
   ],
-  "Toiletry": [
+  "Toiletry 🧻": [
     "Shower Gel",
     "Toilet Rolls",
     "Toothpaste",
     "Wipes",
     "Shampoo",
-    "Deodorant"
+    "Deodorant",
+    "Soap"
   ],
-  "Pet": [
+  "Pet 🐾": [
     "Cat Biscuits",
     "Tinned Cat Food",
     "Cat Treats",
     "Gravy Bones",
     "Dog Mixer Biscuits",
-    "Dog Treats"
+    "Dog Treats",
+    "Asorted Pet Food"
   ],
-  "Bakery": [
-    "Bread",
+  "Bakery 🍞": [
+    "Breads",
     "Bread Rolls",
-    "Cake",
+    "Cakes",
     "Crumpets",
     "Pancakes",
     "Potato Cakes",
-    "Pain Au Chocolate"
+    "Pain Au Chocolate",
+    "Pastries",
+    "Bread Sticks"
   ]
 }

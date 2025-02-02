@@ -13,79 +13,117 @@
     <div id="loading-screen">
       <div id="loading-square-inner"></div>
     </div>
-
+    <!--
     <div id="wallpaper"></div>
-
+    -->
     <section id="shop">
-      <div id="categories"></div>
-      <div class="side-pan">
-        <div id="help">
-          <h1 id="welcome">
-            Welcome to
-            <a href="https://github.com/AnAncientForce/ShopCore">ShopCore</a>!
-          </h1>
-          <p>
-            (1) Tap an item from the left hand side to add it to your basket
-          </p>
-          <p>
-            (2) Tap an item from the right hand side to remove it from your
-            basket
-          </p>
-          <p>(3) When you are done, tap "Copy/Print"</p>
-          <p style="color: red">
-            ⚠️ Refreshing or closing this tab will erase your basket
-          </p>
+      <input
+        id="product_search"
+        type="text"
+        placeholder="Search for product~"
+        class=""
+      />
+      <div class="row">
+        <div id="categories-wrapper" class="rounded">
+          <div id="categories"></div>
         </div>
-        <div class="typical_container">
-          <img
-            id="lookup"
-            class="icon"
-            src="assets/icon-for-help-3-1378617784.png"
-          />
-          <input
-            id="product_search"
-            type="text"
-            placeholder="Search for product~"
-          />
-          <div id="copy" class="typical_container">Copy</div>
-          <div id="print" class="typical_container">Print</div>
-          <div id="editor" class="typical_container">Editor</div>
-        </div>
-        <div id="basket" class="typical_container">
-          <img class="icon" src="assets/4283893-1638626317.png" />
-          <div id="basket_content">
-            <p id="basket_status"></p>
+        <div class="side-pan rounded">
+          <div id="help" class="typical_container">
+            <h1 id="welcome">
+              Welcome to
+              <a href="https://github.com/AnAncientForce/ShopCore">ShopCore</a>!
+            </h1>
+          </div>
+          <div class="typical_container">
+            <img id="shop-handbook" class="icon" src="assets/handbook.png" />
+            <img
+              id="lookup"
+              class="icon"
+              src="assets/icon-for-help-3-1378617784.png"
+            />
+
+            <div class="column">
+              <p><i>~ Operation ~</i></p>
+              <button id="changelog" class="rounded">Changelog</button>
+              <button id="copy" class="rounded">Copy</button>
+              <button id="print" class="rounded">Print</button>
+              <button id="editor" class="rounded">Editor</button>
+            </div>
+          </div>
+          <div id="basket" class="typical_container">
+            <img class="icon" src="assets/4283893-1638626317.png" />
+            <div id="basket_wrapper">
+              <div id="basket_content" class="column">
+                <p id="basket_status"></p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
     <section id="editor">
-      <div id="editor_content"></div>
-      <div class="side-pan">
-        <div class="typical_container">
-          <img class="icon" src="assets/icon-for-help-3-1378617784.png" />
-          <p>(1) Select a category</p>
-          <p>(2) Tap 'Add Product', enter the product name</p>
-          <p>(Hint) Tap 🗑️ to erase an item from your custom list</p>
-          <p style="color: red">
-            ⚠️ If your browser is set to delete cookies upon exit, your list
-            will be erased.
-          </p>
+      <div class="row">
+        <div id="editor-content-wrapper" class="rounded">
+          <div id="editor_content"></div>
         </div>
-        <div id="editor_add" class="typical_container">Add Product</div>
-        <div id="editor_save" class="typical_container">Save</div>
-        <div id="editor_load" class="typical_container">Load</div>
-        <div id="editor_import" class="typical_container">Import</div>
-        <div id="editor_export" class="typical_container">Export</div>
-        <div id="editor_reset" class="typical_container">Reset</div>
-        <div id="editor_leave" class="typical_container">Leave</div>
+        <div class="side-pan rounded">
+          <div class="typical_container">
+            <img id="editor-handbook" class="icon" src="assets/handbook.png" />
+            <div class="column">
+              <p><i>~ Operation ~</i></p>
+              <button id="editor_add" class="rounded">Add Product</button>
+              <button id="editor_save" class="rounded">Save</button>
+              <button id="editor_load" class="rounded">Load</button>
+              <button id="editor_import" class="rounded">Import</button>
+              <button id="editor_export" class="rounded">Export</button>
+              <button id="editor_reset" class="rounded">Reset</button>
+              <button id="editor_leave" class="rounded">Leave</button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
     <section id="print" class="center">
       <div id="PRINT_LIST_CONTENT"></div>
-      <div id="print_leave">🔙</div>
+      <button class="page_leave rounded" data-custom="shop">OK</button>
+    </section>
+    <section id="shop-guide">
+      <h1><i>~ Operation Guide ~</i></h1>
+      <h2><i>You can either</i></h2>
+      <p>Tap an item from the left hand side to add it to your basket</p>
+
+      <h3><i>Or</i></h3>
+      <p>
+        Type the first few letters of any item to quickly find it via the search
+        bar
+      </p>
+      <p>Hit the return key once the correct item has been selected</p>
+      <hr />
+      <p>Tap an item from the right hand side to remove it from your basket</p>
+      <p>When you are done, tap "Copy/Print"</p>
+      <p style="color: red">
+        ⚠️ Refreshing or closing this tab will erase your basket
+      </p>
+      <button class="page_leave rounded" data-custom="shop">OK</button>
+    </section>
+    <section id="editor-guide">
+      <h1><i>~ Operation Guide ~</i></h1>
+      <p>(1) Select a category</p>
+      <p>(2) Tap 'Add Product', enter the product name</p>
+      <p>(Hint) Tap 🗑️ to erase an item from your custom list</p>
+      <p style="color: red">
+        ⚠️ If your browser is set to delete cookies upon exit, your list will be
+        erased.
+      </p>
+      <button class="page_leave rounded" data-custom="editor">OK</button>
+    </section>
+    <section id="changelog-guide">
+      <h1><i>~ Changelog ~</i></h1>
+      <div id="changelog-content"></div>
+      <button class="page_leave rounded" data-custom="shop">OK</button>
     </section>
     <section id="splash" class="center"></section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
     <script type="module" src="index.js"></script>
   </body>
 </html>
