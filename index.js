@@ -350,7 +350,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           LAST_AUTO_SELECTED_SHOP_PRODUCT = null;
         }
         event.target.value = "";
-        this.focus();
       }
     });
 
