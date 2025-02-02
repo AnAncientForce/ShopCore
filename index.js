@@ -327,7 +327,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               inline: "nearest",
               offsetTop: 200,
             });
-            item.focus();
+            // item.focus();
             item.style.animation = "search_highlight 1s forwards";
             setTimeout(() => {
               item.style.animation = "";
