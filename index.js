@@ -342,7 +342,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     .getElementById("product_search")
     .addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
-        event.preventDefault();
         if (LAST_AUTO_SELECTED_SHOP_PRODUCT) {
           update_basket({
             product: LAST_AUTO_SELECTED_SHOP_PRODUCT,
@@ -351,6 +350,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           LAST_AUTO_SELECTED_SHOP_PRODUCT = null;
         }
         event.target.value = "";
+        this.focus();
       }
     });
 
